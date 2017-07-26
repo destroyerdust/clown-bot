@@ -1,0 +1,13 @@
+{
+  "gameServers": {
+    "MOHAA": {
+      "host": "SERVER IP HERE"
+    }
+  },
+  "discordBot": {
+    "clientId": BOT CLIENT ID HERE,
+    "token": "BOT TOKEN HERE",
+    "prefix": "!",
+    "channel": "CHAT CHANNEL HERE"
+  }
+}
