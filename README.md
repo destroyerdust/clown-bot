@@ -1,2 +1,2 @@
 # clown-bot
-[CLOWN] Discord Bot
+[CLOWN] Discord Bot!
