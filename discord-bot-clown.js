@@ -2,7 +2,14 @@
   A ping pong bot, whenever you send "ping", it replies "pong".
 */
 
+//Prod
 var config = require('./config.json')
+
+//Dev
+//var config = require('./dev-config.json')
+
+const channelName = config.discordBot.channel
+const prefix = config.discordBot.prefix;
 
 // Import the discord.js module
 const Discord = require('discord.js');
@@ -19,52 +26,87 @@ const MOHAA_SERVER = config.gameServers.MOHAA.host;
 // The ready event is vital, it means that your bot will only start reacting to information
 // from Discord _after_ ready is emitted
 client.on('ready', () => {
-    console.log('I am ready!');
+    console.log(`${client.user.username} is ready!`);
 });
 
 // Create an event listener for messages
 client.on('message', message => {
-    //console.log(message);
-	if(message.channel.name === 'roboto'){
-	// If the message is "ping"
-    	if (message.content === 'ping') {
-    	   // Send "pong" to the same channel
-    	   message.channel.send('pong');
-    	}
-        if (message.content === '!server') {
+
+    // Don't reply to Bots or DM's
+    if (message.author.bot) return;
+    if (message.channel.type === "dm") return;
+
+    // Command with Argument Parser IN PROGRES
+    let messageArray = message.content.split(" ");
+    let command = messageArray[0]
+    let args = messageArray.slice(1);
+
+    if (!command.startsWith(prefix)) return;
+
+    if (message.channel.name === channelName) {
+
+        // Ping Pong!
+        if (message.content === `${prefix}ping`) {
+            // Send "pong" to the same channel
+            message.channel.send('Pong!');
+        }
+
+        // Mohaa Server Info Embed
+        if (message.content === `${prefix}server`) {
 
             Gamedig.query({
-            	type: 'mohaa',
-            	host: MOHAA_SERVER
+                type: 'mohaa',
+                host: MOHAA_SERVER
             },
-            function(e,state) {
-            	if(e){
-                    message.channel.send('Server is Offline!');
-                }else{
-
-                    var build_message = "";
-                    build_message += "MOHAA SERVER NAME: " + state.name + "\n";
-                    build_message += "MOHAA SERVER IP: " + MOHAA_SERVER + "\n";
-                    build_message += "MOHAA SERVER MAP: " + state.map + "\n";
-                    build_message += "MAX PLAYERS: " + state.maxplayers + "\n";
-                    build_message += "PASSWORD?: " + state.password + "\n";
-                    
-                    playersArray = state.players;
-                    var players = "";
-                    for (var i = 0, len = playersArray.length; i < len; i++) {
-                        if(i >= 1){
-                            players += ", ";
+                function (e, state) {
+                    if (e) {
+                        console.log(e);
+                        message.channel.send('Server is Offline!');
+                    } else {
+                        var playersArray = state.players;
+                        var players = "";
+                        for (var i = 0, len = playersArray.length; i < len; i++) {
+                            if (i >= 1) {
+                                players += ", ";
+                            }
+                            players += playersArray[i].player;
                         }
-                        players += playersArray[i].player;
+
+                        if (!players) {
+                            players = " "
+                        }
+
+                        let serverEmbed = new Discord.RichEmbed()
+                            .setTitle("[CLOWN] Server Information")
+                            .setDescription("This is the [CLOWN] Server Info")
+                            .addField("Server Name:", state.name)
+                            .addField("Server IP: ", MOHAA_SERVER)
+                            .addField("Server Map: ", state.map)
+                            .addField("Max Players: ", state.maxplayers)
+                            .addField("Password? ", state.password)
+                            .addField("Players: ","Current Players: " || players)
+                            .setFooter("Info provided by GameDig Node JS Project")
+                            .setTimestamp();
+
+                        message.channel.sendEmbed(serverEmbed);
                     }
-                    build_message += "Players: " + players + "\n";
-                    
-                    message.channel.send(build_message);
-                }
-            });
+                });
         }
-	}
-  
+
+        // Work in Progress User Info
+        if (command === `${prefix}userinfo`) {
+            let embed = new Discord.RichEmbed()
+                .setTitle("User Info")
+                .setAuthor(message.author.username)
+                .setDescription("UserInfo!")
+                .setColor("#9B59B6")
+                .setFooter("Footer Text")
+                .setTimestamp();
+
+            message.channel.send({ embed });
+        }
+    }
+
 });
 
 // Log our bot in
