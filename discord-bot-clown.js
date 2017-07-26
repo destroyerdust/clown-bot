@@ -84,7 +84,7 @@ client.on('message', message => {
                             .addField("Server Map: ", state.map)
                             .addField("Max Players: ", state.maxplayers)
                             .addField("Password? ", state.password)
-                            .addField("Players: ","Current Players: " || players)
+                            .addField("Players: ","Current Players: " + players)
                             .setFooter("Info provided by GameDig Node JS Project")
                             .setTimestamp();
 
