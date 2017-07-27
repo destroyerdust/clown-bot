@@ -41,18 +41,20 @@ client.on('message', message => {
     let command = messageArray[0]
     let args = messageArray.slice(1);
 
+    let userCommand = command.toLowerCase();
+
     if (!command.startsWith(prefix)) return;
 
     if (message.channel.name === channelName) {
 
         // Ping Pong!
-        if (message.content === `${prefix}ping`) {
+        if (userCommand === `${prefix}ping`) {
             // Send "pong" to the same channel
             message.channel.send('Pong!');
         }
 
         // Mohaa Server Info Embed
-        if (message.content === `${prefix}server`) {
+        if (userCommand === `${prefix}server`) {
 
             Gamedig.query({
                 type: 'mohaa',
