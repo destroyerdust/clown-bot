@@ -89,8 +89,8 @@ client.on('message', message => {
                             .addField("Players: ","Current Players: " + players)
                             .setFooter("Info provided by GameDig Node JS Project")
                             .setTimestamp();
-
-                        message.channel.sendEmbed(serverEmbed);
+                            
+                        message.channel.send({embed:serverEmbed});
                     }
                 });
         }
