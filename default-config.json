@@ -1,4 +1,7 @@
 {
+  "botInfo":{
+    "version": 1.2
+  },
   "gameServers": {
     "MOHAA": {
       "host": "SERVER IP HERE"

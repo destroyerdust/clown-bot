@@ -21,6 +21,8 @@ const client = new Discord.Client();
 // The token of your bot - https://discordapp.com/developers/applications/me
 const token = config.discordBot.token;
 
+const version = config.botInfo.version;
+
 const MOHAA_SERVER = config.gameServers.MOHAA.host;
 
 // The ready event is vital, it means that your bot will only start reacting to information
@@ -45,7 +47,14 @@ client.on('message', message => {
 
     if (!command.startsWith(prefix)) return;
 
+
     if (message.channel.name === channelName) {
+
+        // Current Version
+        if (userCommand === `${prefix}version`) {
+            messageToSend = "Version: " + version;
+            message.channel.send(messageToSend);
+        }
 
         // Ping Pong!
         if (userCommand === `${prefix}ping`) {
