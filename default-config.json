@@ -1,16 +1,6 @@
 {
-  "botInfo":{
-    "version": 1.2
-  },
-  "gameServers": {
-    "MOHAA": {
-      "host": "SERVER IP HERE"
+    "discordBot": {
+        "clientId": "",
+        "token": ""
     }
-  },
-  "discordBot": {
-    "clientId": BOT CLIENT ID HERE,
-    "token": "BOT TOKEN HERE",
-    "prefix": "!",
-    "channel": "CHAT CHANNEL HERE"
-  }
 }
