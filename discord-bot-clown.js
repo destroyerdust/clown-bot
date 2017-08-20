@@ -1,29 +1,21 @@
-/*
-  A ping pong bot, whenever you send "ping", it replies "pong".
-*/
-
 //Prod
-var config = require('./config.json')
+var config = require('./config.json');
 
-//Dev
-//var config = require('./dev-config.json')
-
-const channelName = config.discordBot.channel
-const prefix = config.discordBot.prefix;
-
-// Import the discord.js module
-const Discord = require('discord.js');
+const Discord = require('discord.js')
 var Gamedig = require('gamedig');
 
 // Create an instance of a Discord client
 const client = new Discord.Client();
-
-// The token of your bot - https://discordapp.com/developers/applications/me
 const token = config.discordBot.token;
 
-const version = config.botInfo.version;
+var clownInfo = require('./data.json');
 
-const MOHAA_SERVER = config.gameServers.MOHAA.host;
+const channelName = clownInfo.discordBot.channel;
+const prefix = clownInfo.discordBot.prefix;
+const MOHAA_SERVER = clownInfo.gameServers.MOHAA.host;
+
+
+
 
 // The ready event is vital, it means that your bot will only start reacting to information
 // from Discord _after_ ready is emitted
@@ -50,10 +42,20 @@ client.on('message', message => {
 
     if (message.channel.name === channelName) {
 
+    	// Current Ranks
+        if (userCommand === `${prefix}ranks`) {
+            let serverEmbed = new Discord.RichEmbed()
+            	.setTitle("[CLOWN] Ranks")
+                .setDescription(clownInfo.ranks)
+            message.channel.send({embed:serverEmbed});
+        }
+
         // Current Version
         if (userCommand === `${prefix}version`) {
-            messageToSend = "Version: " + version;
-            message.channel.send(messageToSend);
+            let serverEmbed = new Discord.RichEmbed()
+            	.setTitle("[CLOWN] Discord Bot Version")
+                .setDescription(clownInfo.version)
+            message.channel.send({embed:serverEmbed});
         }
 
         // Ping Pong!

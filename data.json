@@ -1,0 +1,19 @@
+{
+    "version": 1.22,
+    "gameServers": {
+        "MOHAA": {
+            "host": "108.61.125.141"
+        }
+    },
+    "discordBot": {
+        "prefix": "!",
+        "channel": "general"
+    },
+    "ranks": "BT = Big Top \nRB = Ringling Brothers \nHR = Harlequin\nHB = Hobo\nCP = Chimp\nMM = Mime\nSF = Sheriff\nBB = Barnum & Bailey\nS = Shriners\nRM = Ronald McDonald",
+    "commands": [
+        {"name": "ranks", "description": "Displays the current ranks", "permission": "public"},
+        {"name": "ping", "description": "Pings the bot to see if it is up", "permission": "public"},
+        {"name": "server", "description": "Queries the MOHAA server", "permission": "public"},
+        {"name": "version", "description": "Displays the current version of the bot", "permission": "public"}
+    ]
+}
